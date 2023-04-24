@@ -5,4 +5,5 @@
     <string name="password">Password</string>
     <string name="dragon_ballz">Dragon Ballz</string>
     <string name="hero_name">Hero Name</string>
+    <string name="heroes_title">Heroes</string>
 </resources>
