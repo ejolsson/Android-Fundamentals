@@ -7,74 +7,77 @@
     >
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/login_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srcCompat="@mipmap/login_background"
         tools:layout_editor_absoluteX="145dp"
         tools:layout_editor_absoluteY="121dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         />
+
+    <TextView
+        android:id="@+id/login_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="56dp"
+        android:layout_marginTop="100dp"
+        android:text="@string/dragon_ballz"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="360dp"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_label"
+        tools:layout_editor_absoluteX="2dp">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/user_email_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="40dp"
-            android:text="Login"
-            android:textColor="@color/white"
             android:layout_margin="16dp"
-            android:layout_marginBottom="800dp"
-            />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="User Email"
-            android:layout_margin="16dp"
+            android:text="@string/user_email"
             android:textColor="@color/white"
-            />
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:backgroundTint="@color/white"
             android:layout_margin="16dp"
-            />
+            android:backgroundTint="@color/white"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/password_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password"
-            android:textColor="@color/white"
             android:layout_margin="16dp"
-            />
+            android:text="@string/password"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/editTextTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:backgroundTint="@color/white"
-            android:hint="password"
             android:layout_margin="16dp"
-            android:textColor="@color/white"
-            />
+            android:backgroundTint="@color/white"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/button"
@@ -83,13 +86,10 @@
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:backgroundTint="#fadc26"
+            android:text="@string/login"
             android:textColor="@color/black"
-            android:text="Login"
-
-            />
-
+            android:textSize="20sp" />
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

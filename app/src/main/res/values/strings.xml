@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AndroidFundamentals</string>
+    <string name="login">Login</string>
+    <string name="user_email">User Email</string>
+    <string name="password">Password</string>
+    <string name="dragon_ballz">Dragon Ballz</string>
 </resources>
