@@ -6,4 +6,8 @@
     <string name="dragon_ballz">Dragon Ballz</string>
     <string name="hero_name">Hero Name</string>
     <string name="heroes_title">Heroes</string>
+    <string name="take_damage">Take Damage</string>
+    <string name="fight">Fight</string>
+    <string name="heal">Heal</string>
+    <string name="life">Life</string>
 </resources>
