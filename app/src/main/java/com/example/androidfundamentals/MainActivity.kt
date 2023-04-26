@@ -21,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 //        setContentView(R.layout.login)
 //        setContentView(R.layout.hero_list)
-        setContentView(R.layout.hero_fight)
+//        setContentView(R.layout.hero_fight)
+        setContentView(binding.root)
         Log.w("Tag", "onCreate")
         savedInstanceState?.let {
             counter = it.getInt(tagInt, 0)
@@ -68,4 +69,7 @@ class MainActivity : AppCompatActivity() {
         outState.putString(tagString, "El contador es $counter")
 
     }
+
+    // TODO: - Pull image from internet -
+    // https://www.tutorialspoint.com/how-do-i-load-an-imageview-by-url-on-android
 }
