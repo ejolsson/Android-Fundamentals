@@ -30,7 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    viewBinding { enabled = true } // need to add to each project
+    viewBinding { enabled = true } // L5, 2.51.20, need to add to each project
 }
 
 dependencies {

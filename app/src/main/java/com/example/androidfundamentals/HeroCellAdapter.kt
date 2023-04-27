@@ -29,10 +29,11 @@ class HeroCellAdapter(val listOfHeroes: List<ViewModelMainActivity.Hero>): Recyc
         return MainActivityViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount(): Int { // set number of rows in table = hero.count??
         return listOfHeroes.size
     }
 
+    // not sure what section below does...
     override fun onBindViewHolder(holder: MainActivityViewHolder, position: Int) {
         holder.showHero(listOfHeroes[position], position % 2 == 0)
     }

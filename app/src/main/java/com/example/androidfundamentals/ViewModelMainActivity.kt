@@ -18,12 +18,5 @@ class ViewModelMainActivity : ViewModel() {
     )
 
     // Battle Logic (all calculations take place in ViewModel)
-    var life:Int = 100
-    private var damageLevels = 6
 
-    fun heal(life:Int) = life + 20
-
-    fun takeDamage() = {
-        val randomNumber = Random.nextInt(1,damageLevels)
-    }
 }
