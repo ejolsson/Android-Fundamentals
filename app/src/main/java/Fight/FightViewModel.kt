@@ -1,11 +1,15 @@
-package com.example.androidfundamentals
+package Fight
 
+import HeroList.HeroDTO
+import HeroList.HeroListViewModel
+import Login.LoginViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlin.random.Random
+import Fight.Hero
 
 class FightViewModel : ViewModel() {
 
@@ -14,7 +18,7 @@ class FightViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<UiResponse>(UiResponse.Started())
     val uiState: StateFlow<UiResponse> = _uiState
 
-    val goku = ViewModelMainActivity.Hero("GoKu", "I am Goku", "https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300")
+    val goku = Hero("GoKu", "https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300")
     private var life:Double = 100.0
     private var damageLevels = 6
 

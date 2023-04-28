@@ -1,0 +1,4 @@
+package HeroList
+
+class HeroListFragment {
+}

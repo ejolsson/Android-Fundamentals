@@ -1,19 +1,21 @@
-package com.example.androidfundamentals
+package HeroList
 
+import Login.LoginViewModel
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidfundamentals.databinding.HeroCellBinding
+import Fight.Hero
 
-class HeroCellAdapter(val listOfHeroes: List<ViewModelMainActivity.Hero>): RecyclerView.Adapter<HeroCellAdapter.MainActivityViewHolder>() {
+class HeroCellAdapter(val listOfHeroes: List<Hero>): RecyclerView.Adapter<HeroCellAdapter.MainActivityViewHolder>() {
 
 //    lateinit var binding : HeroCellBinding // name CamelCased hero_list.xml.
 
     class MainActivityViewHolder(private var item: HeroCellBinding) : RecyclerView.ViewHolder(item.root) {
 
-        fun showHero(hero: ViewModelMainActivity.Hero, par: Boolean) {
+        fun showHero(hero: Hero, par: Boolean) {
             item.heroNameCell.text = hero.name
-            item.heroDescriptionCell.text = hero.description
+
         // TODO: add image
         // item.heroThumb...
 

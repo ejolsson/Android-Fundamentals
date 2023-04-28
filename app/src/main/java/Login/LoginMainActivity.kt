@@ -1,4 +1,4 @@
-package com.example.androidfundamentals
+package Login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import android.util.Log
 import com.example.androidfundamentals.databinding.LoginBinding
 
-class MainActivity : AppCompatActivity() {
+class LoginMainActivity : AppCompatActivity() {
 
     private var counter = 0
     private var tagInt = "MyInteger"
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : LoginBinding // all projects?
 
-    private val viewModel : ViewModelMainActivity by viewModels() // L5, 0.35.00, extra library needed
+    private val viewModel : LoginViewModel by viewModels() // L5, 0.35.00, extra library needed
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

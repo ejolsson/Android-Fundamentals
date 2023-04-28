@@ -1,0 +1,4 @@
+package Fight
+
+class FightFragment {
+}
