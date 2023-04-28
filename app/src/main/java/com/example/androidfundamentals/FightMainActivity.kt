@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.androidfundamentals.databinding.ActivityMainBinding
 import com.example.androidfundamentals.databinding.HeroFightBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
