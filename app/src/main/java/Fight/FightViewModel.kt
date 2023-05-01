@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 import Fight.Hero
 
-class FightViewModel : ViewModel() {
+class FightViewModel: ViewModel() {
 
     // model file using ViewModelAdvanced project
 
