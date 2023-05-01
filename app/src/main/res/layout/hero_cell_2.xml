@@ -10,7 +10,7 @@
     >
 
     <TextView
-        android:id="@+id/hero_name_cell"
+        android:id="@+id/tvHeroNameCell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/hero_name"
@@ -21,7 +21,7 @@
         />
 
     <ImageView
-        android:id="@+id/hero_thumb"
+        android:id="@+id/ivHeroThumb"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="center"

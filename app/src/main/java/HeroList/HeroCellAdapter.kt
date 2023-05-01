@@ -17,11 +17,14 @@ class HeroCellAdapter(
     private val callback: HeroClicked,
     ): RecyclerView.Adapter<HeroCellAdapter.MainActivityViewHolder>() {
 
-    class MainActivityViewHolder(private var item: HeroCell2Binding, private val callback: HeroClicked): RecyclerView.ViewHolder(item.root) {
+    class MainActivityViewHolder(
+        private var item: HeroCell2Binding,
+        private val callback: HeroClicked):
+        RecyclerView.ViewHolder(item.root) {
 
         fun showHero(hero: Hero, par: Boolean) {
-            item.heroNameCell.text = hero.name
-            Picasso.get().load("https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300").into(item.heroThumb)
+            item.tvHeroNameCell.text = hero.name
+            Picasso.get().load("https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300").into(item.ivHeroThumb)
         }
     }
 
