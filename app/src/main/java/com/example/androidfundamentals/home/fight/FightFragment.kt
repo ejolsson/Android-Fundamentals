@@ -1,23 +1,31 @@
-package com.example.androidfundamentals.fight
+package com.example.androidfundamentals.home.fight
 
-import com.example.androidfundamentals.herolist.HeroClicked
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-
+import androidx.fragment.app.activityViewModels
+import com.example.androidfundamentals.data.Hero
 import com.example.androidfundamentals.databinding.HeroFightFragmentBinding
+import com.example.androidfundamentals.home.SharedViewModel
+import com.squareup.picasso.Picasso
 
-class FightFragment(val callback: HeroClicked): Fragment() {
+class FightFragment(private val hero: Hero) : Fragment() {
 
     private lateinit var binding: HeroFightFragmentBinding
-//    val fightViewModel: FightViewModel by viewModels()
+    private val viewModel: SharedViewModel by activityViewModels()
 
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        binding = HeroFightBinding.inflate(inflater)
-//        return binding.root
-//    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = HeroFightFragmentBinding.inflate(inflater)
+        binding.heroFightPage.text = hero.name
+        Picasso.get().load(hero.photo).into(binding.heroBattlePic)
+        return binding.root
+    }
 //
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)

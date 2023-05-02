@@ -10,11 +10,13 @@
         android:id="@+id/login_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@mipmap/login_background"
-        tools:layout_editor_absoluteX="145dp"
-        tools:layout_editor_absoluteY="121dp"
-        android:scaleType="fitXY"
         android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/login_background"
         />
 
     <TextView

@@ -1,4 +1,4 @@
-package com.example.androidfundamentals.fight
+package com.example.androidfundamentals.data
 
 // Hero model copied from HeroDTO, used for battle simulation
 

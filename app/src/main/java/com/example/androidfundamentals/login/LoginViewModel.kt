@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 
 class LoginViewModel : ViewModel() {
 
-//    private val _uiState = MutableStateFlow<HeroListViewModel.UiState>(HeroListViewModel.UiState.Idle)
+//    private val _uiState = MutableStateFlow<SharedViewModel.UiState>(SharedViewModel.UiState.Idle)
 ////    private val userName: String = ""
 ////    private val password: String = ""
 //

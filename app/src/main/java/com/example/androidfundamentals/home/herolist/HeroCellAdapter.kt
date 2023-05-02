@@ -1,10 +1,11 @@
-package com.example.androidfundamentals.herolist
+package com.example.androidfundamentals.home.herolist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidfundamentals.fight.Hero
+import com.example.androidfundamentals.data.Hero
 import com.example.androidfundamentals.databinding.HeroCellBinding
+import com.squareup.picasso.Picasso
 
 interface HeroClicked {
     fun heroSelectionClicked(hero: Hero) {
@@ -20,7 +21,7 @@ class HeroCellAdapter(
     class MainActivityViewHolder(private var item: HeroCellBinding, private val callback: HeroClicked): RecyclerView.ViewHolder(item.root) {
         fun showHero(hero: Hero, par: Boolean) {
             item.tvHeroNameCell.text = hero.name // specific hero name
-//            Picasso.get().load("https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300").into(item.ivHeroThumb)
+            Picasso.get().load("https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300").into(item.ivHeroThumb)
             item.lLHeroCell.setOnClickListener {// when the cell is clicked...
                 callback.heroSelectionClicked(hero)
             }
