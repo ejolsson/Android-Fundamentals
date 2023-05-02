@@ -37,6 +37,7 @@ class HeroListFragment(): Fragment(), HeroClicked {
 
         binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
         binding.rvListOfHeroes.adapter = adapter
+
 //        binding.root.setOnClickListener {
 //            // Callback methods, like fetchHeroes. Should this go under viewModel?
 //            // callback.onClick
