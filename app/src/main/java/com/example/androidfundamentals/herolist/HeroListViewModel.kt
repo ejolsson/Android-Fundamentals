@@ -1,6 +1,6 @@
-package HeroList
+package com.example.androidfundamentals.herolist
 
-import Fight.Hero
+import com.example.androidfundamentals.fight.Hero
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -54,7 +54,8 @@ private val token = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.
                 try {
                     val heroDtoArray = gson.fromJson(responseBody.string(), Array<HeroDTO>::class.java)
                     _uiState.value = UiState.OnHeroReceived(heroDtoArray.toList().map {
-                        Hero(it.name, it.photo) })
+                        Hero(it.name, it.photo)
+                    })
                 } catch (ex: Exception) {
                     _uiState.value= UiState.Error("Something went wrong in the response")
                 }

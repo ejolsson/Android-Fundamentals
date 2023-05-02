@@ -1,18 +1,9 @@
-package Fight
+package com.example.androidfundamentals.fight
 
-import HeroList.HeroClicked
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import com.example.androidfundamentals.herolist.HeroClicked
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 
-import androidx.lifecycle.lifecycleScope
 import com.example.androidfundamentals.databinding.HeroFightFragmentBinding
-import com.example.androidfundamentals.databinding.HeroListFragmentBinding
-import kotlinx.coroutines.launch
 
 class FightFragment(val callback: HeroClicked): Fragment() {
 

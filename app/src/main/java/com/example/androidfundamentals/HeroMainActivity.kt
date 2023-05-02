@@ -1,17 +1,16 @@
 package com.example.androidfundamentals
 
-import Fight.FightFragment
-import HeroList.HeroListFragment
-import HeroList.HeroListViewModel
-import Fight.FightViewModel
-import Fight.Hero
-import Fight.listOfHeroesSample
-import HeroList.HeroCellAdapter
-import HeroList.HeroClicked
+import com.example.androidfundamentals.fight.FightFragment
+import com.example.androidfundamentals.herolist.HeroListFragment
+import com.example.androidfundamentals.herolist.HeroListViewModel
+import com.example.androidfundamentals.fight.FightViewModel
+import com.example.androidfundamentals.fight.Hero
+import com.example.androidfundamentals.fight.listOfHeroesSample
+import com.example.androidfundamentals.herolist.HeroCellAdapter
+import com.example.androidfundamentals.herolist.HeroClicked
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidfundamentals.databinding.HeroActivityMainBinding
 import com.example.androidfundamentals.databinding.HeroCellBinding
 import com.example.androidfundamentals.databinding.HeroListFragmentBinding

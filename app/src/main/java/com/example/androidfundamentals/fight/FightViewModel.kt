@@ -1,15 +1,11 @@
-package Fight
+package com.example.androidfundamentals.fight
 
-import HeroList.HeroDTO
-import HeroList.HeroListViewModel
-import Login.LoginViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlin.random.Random
-import Fight.Hero
 
 class FightViewModel: ViewModel() {
 

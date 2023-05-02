@@ -1,12 +1,10 @@
-package HeroList
+package com.example.androidfundamentals.herolist
 
-import Login.LoginViewModel
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import Fight.Hero
+import com.example.androidfundamentals.fight.Hero
 import com.example.androidfundamentals.databinding.HeroCellBinding
-import com.squareup.picasso.Picasso
 
 interface HeroClicked {
     fun heroSelectionClicked(hero: Hero) {
@@ -15,7 +13,7 @@ interface HeroClicked {
 }// Show scrollable list of heroes (name & picture)
 
 class HeroCellAdapter(
-    private val listHeroes: List<Fight.Hero>,
+    private val listHeroes: List<Hero>,
     private val callback: HeroClicked,
     ): RecyclerView.Adapter<HeroCellAdapter.MainActivityViewHolder>() {
 

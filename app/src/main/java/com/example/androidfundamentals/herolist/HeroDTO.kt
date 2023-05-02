@@ -1,4 +1,4 @@
-package HeroList
+package com.example.androidfundamentals.herolist
 
 // DataModel
 // This DTO receives hero data from Dragon Ballz API

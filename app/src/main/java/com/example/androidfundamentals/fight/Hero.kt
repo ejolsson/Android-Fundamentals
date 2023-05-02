@@ -1,6 +1,4 @@
-package Fight
-
-import HeroList.HeroDTO
+package com.example.androidfundamentals.fight
 
 // Hero model copied from HeroDTO, used for battle simulation
 
