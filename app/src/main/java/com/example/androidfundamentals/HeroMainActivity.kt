@@ -4,19 +4,25 @@ import Fight.FightFragment
 import HeroList.HeroListFragment
 import HeroList.HeroListViewModel
 import Fight.FightViewModel
+import Fight.Hero
 import Fight.listOfHeroesSample
 import HeroList.HeroCellAdapter
 import HeroList.HeroClicked
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidfundamentals.databinding.HeroActivityMainBinding
-import com.example.androidfundamentals.databinding.HeroCell2Binding
+import com.example.androidfundamentals.databinding.HeroCellBinding
+import com.example.androidfundamentals.databinding.HeroListFragmentBinding
 
 class HeroMainActivity : AppCompatActivity(), HeroClicked {
 
+    // TODO: manage all these bindings here??
     private lateinit var heroActivityMainBinding: HeroActivityMainBinding // 1st xml UI setup
-    private lateinit var cellBinding: HeroCell2Binding // cell setup
+    private lateinit var heroListFragmentBinding: HeroListFragmentBinding
+    private lateinit var cellBinding: HeroCellBinding // cell setup
+
     private val heroListViewModel: HeroListViewModel by viewModels()
     private val fightViewModel: FightViewModel by viewModels()
 //    private val hero: Hero.Hero = TODO()
@@ -29,9 +35,7 @@ class HeroMainActivity : AppCompatActivity(), HeroClicked {
             .beginTransaction()
             .replace(heroActivityMainBinding.fFragment.id, HeroListFragment(this))
             .commitNow()
-            //.fFragment = FrameLayout placeholder
 
-        // https://stackoverflow.com/questions/44301301/android-how-to-achieve-setonclicklistener-in-kotlin
         heroActivityMainBinding.heroListTitle.setOnClickListener {
             // thing to click and get something, based on Fragments Proj
             addHeroListFragment()
@@ -42,9 +46,17 @@ class HeroMainActivity : AppCompatActivity(), HeroClicked {
 //            }
 //        }
         val listOfHeroesSample = listOfHeroesSample // sample data TODO: Remove
-        val adapter = HeroCellAdapter(listOfHeroesSample, this) // instantiate adapter. Missing piece?????
+        val adapter = HeroCellAdapter(listOfHeroesSample, this) // instantiate adapter.
 
-        heroActivityMainBinding.
+        // TODO: Runtime crash when using 2 lines below. Try in HeroListFragment > onCreateView
+//        heroListFragmentBinding.rvListOfHeroes.layoutManager = LinearLayoutManager(this) // runtime crash
+//        heroListFragmentBinding.rvListOfHeroes.adapter = adapter
+
+//        heroListFragmentBinding.rvListOfHeroes.setOnClickListener {
+//            addFightFragment()
+//        }
+
+//        heroListViewModel.getHeroes() // runtime crash
     }
 
     private fun addHeroListFragment() { // based on Fragments proj
@@ -55,7 +67,6 @@ class HeroMainActivity : AppCompatActivity(), HeroClicked {
         // listOfHeros is the RecyclerView
     }
 
-    // Call supportFragmentManager for each element?
     private fun addFightFragment() {
         supportFragmentManager
             .beginTransaction()
@@ -63,7 +74,9 @@ class HeroMainActivity : AppCompatActivity(), HeroClicked {
             .commitNow()
     }
 
-    fun onHeroClicked(hero: Fight.Hero) {
+    fun onHeroClicked(hero: Hero) {
         // Todo: define click functionality
+        addFightFragment()
     }
+
 }

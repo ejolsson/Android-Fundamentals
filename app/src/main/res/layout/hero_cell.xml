@@ -7,25 +7,20 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/cardview_dark_background"
-    >
-
+    android:id="@+id/lLHeroCell">
     <TextView
         android:id="@+id/tvHeroNameCell"
+        android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/hero_name"
-        android:textColor="@color/white"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:layout_margin="8dp"
-        />
-
+        android:layout_margin="8dp"/>
     <ImageView
         android:id="@+id/ivHeroThumb"
+        tools:srcCompat="@tools:sample/avatars"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_gravity="center"
-        tools:srcCompat="@tools:sample/avatars"
-        />
-
+        android:layout_gravity="center"/>
 </LinearLayout>

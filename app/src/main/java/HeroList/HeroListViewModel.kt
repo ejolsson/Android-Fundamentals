@@ -34,7 +34,7 @@ private val token = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.
         getHeroes()
     }
 
-    private fun getHeroes() {
+    fun getHeroes() {
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
             val url = "https://dragonball.keepcoding.education/api/heros/all"
