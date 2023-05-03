@@ -89,9 +89,9 @@ private val token = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.
 
     sealed class UiState {
         object Idle: UiState()
-        data class Error(val error: String) : UiState()
-        data class OnHeroReceived(val name: List<Hero>) : UiState()
-
+        data class Error(val error: String): UiState()
+//        data class OnLoginReceived(val response: String): UiState()
+        data class OnHeroReceived(val heroes: List<Hero>): UiState()
         data class LifeRemaining(var life: Double): UiState()
 
     }
