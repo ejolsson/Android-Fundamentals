@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
+import com.example.androidfundamentals.R
 import com.example.androidfundamentals.databinding.LoginBinding
 
 class LoginMainActivity : AppCompatActivity() {
@@ -24,12 +27,25 @@ class LoginMainActivity : AppCompatActivity() {
 //        setContentView(R.layout.hero_fight)
         setContentView(binding.root)
         Log.w("Tag", "onCreate")
+
         savedInstanceState?.let {
             counter = it.getInt(tagInt, 0)
-            Log.w("Tag",it.getString(tagString).toString())
+            Log.w("Tag", it.getString(tagString).toString())
         }
         counter++
         Log.w("Tag", "counter = $counter")
+
+        // connect UI to usable fields
+        val email = findViewById<EditText>(R.id.etEmail)
+        val password = findViewById<EditText>(R.id.etPassword)
+        val loginButton = findViewById<Button>(R.id.bLogin)
+
+        loginButton.setOnClickListener {
+            Log.w("Tag","Login button tapped")
+            Log.w("Tag", "email = ${email.text}")
+            Log.w("Tag", "password = ${password.text}")
+            viewModel.userLogin("${email.text}", "${password.text}")
+        }
     }
 
     override fun onStart() {
