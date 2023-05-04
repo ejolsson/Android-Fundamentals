@@ -1,21 +1,17 @@
 package com.example.androidfundamentals.login
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import androidx.lifecycle.lifecycleScope
 import com.example.androidfundamentals.R
 import com.example.androidfundamentals.databinding.LoginBinding
 import com.example.androidfundamentals.home.HeroMainActivity
-import com.example.androidfundamentals.home.SharedViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class LoginMainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     private val viewModel : LoginViewModel by viewModels() // L5, 0.35.00, extra lib needed
     private lateinit var binding : LoginBinding
 
@@ -38,12 +34,11 @@ class LoginMainActivity : AppCompatActivity() {
         }
 
         // Rapid login for testing
-//        val email = "ejolsson@gmail.com" // todo: Remove. Testing only.
-//        val password = "vamosRafa2023!" // todo: Remove. Testing only.
+
 
         // connect UI to usable fields
-        val email = findViewById<EditText>(R.id.etEmail)
-        val password = findViewById<EditText>(R.id.etPassword)
+//        val email = findViewById<EditText>(R.id.etEmail)
+//        val password = findViewById<EditText>(R.id.etPassword)
         val loginButton = findViewById<Button>(R.id.bLogin)
 //        var token: String = "" // using tokenPublic instead
 
@@ -51,8 +46,8 @@ class LoginMainActivity : AppCompatActivity() {
             Log.w("Tag","Login button tapped")
 //            Log.w("Tag", "email = ${email.text}")
 //            Log.w("Tag", "password = ${password.text}")
-            tokenPublic = viewModel.userLogin("${email.text}", "${password.text}")
-//            tokenPublic = viewModel.userLogin(email, password) // todo: Remove. For fast login only
+//            tokenPublic = viewModel.userLogin("${email.text}", "${password.text}")
+            tokenPublic = viewModel.userLogin(email, password) // todo: Remove. For fast login only
             Log.w("Tag", "token post api call = $tokenPublic") // empty
             HeroMainActivity.launch(this, token = tokenPublic)
         }

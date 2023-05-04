@@ -19,7 +19,7 @@
             android:name=".home.HeroMainActivity"
             android:exported="false"/>
         <activity
-            android:name=".login.LoginMainActivity"
+            android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

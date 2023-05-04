@@ -21,23 +21,18 @@ class LoginViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle) // initialize state to Idle
     val uiState: StateFlow<UiState> = _uiState
 
-    var token: String = ""
+    var token: String = "" // remove in favor of tokenGobal?
 
 //    init {
 //        userLogin()
 //    }
 
-    fun login() {
-
-    }
     fun userLogin(email: String, password: String): String {
     Log.w("Tag","fun userLogin started...")
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
-            val loginString = "$email$password"
-            //        println(loginString)
             // https://dragonball.keepcoding.education/api/auth/login
-            val baseUrl = "https://dragonball.keepcoding.education/api/"
+            val baseUrl = "https://dragonball.keepcoding.education/api/" // Todo: pull out
             val url = "${baseUrl}auth/login"
             val credentials = Credentials.basic(email, password)
             val formBody = FormBody.Builder().build()

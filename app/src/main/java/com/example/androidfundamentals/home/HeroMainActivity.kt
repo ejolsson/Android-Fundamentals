@@ -13,7 +13,6 @@ import com.example.androidfundamentals.databinding.HeroActivityMainBinding
 class HeroMainActivity : AppCompatActivity() {
 
     companion object {
-//        val launch: Unit
 
         fun launch(context: Context, token: String) {
             val intent = Intent(context, HeroMainActivity::class.java)
@@ -27,6 +26,13 @@ class HeroMainActivity : AppCompatActivity() {
 
     private val sharedViewModel: SharedViewModel by viewModels()
 
+//    init { // app crash with this
+//        sharedViewModel.getHeroes()
+//    }
+//
+//    fun relaunch() {
+//        sharedViewModel.getHeroes()
+//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         heroActivityMainBinding = HeroActivityMainBinding.inflate(layoutInflater)
@@ -35,5 +41,7 @@ class HeroMainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(heroActivityMainBinding.fFragment.id, HeroListFragment())
             .commitNow()
+    Log.w("Tag", "HeroAct > onCreate...")
+//    sharedViewModel.getHeroes() // not showing
     }
 }
