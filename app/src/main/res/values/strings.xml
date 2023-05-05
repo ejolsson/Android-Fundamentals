@@ -12,4 +12,6 @@
     <string name="life">Life</string>
     <string name="choose_a_hero">Choose a Hero</string>
     <string name="dragon_ballz_fight">Dragon Ballz Fight!</string>
+    <string name="life_readout">Life 100%</string>
+    <string name="herofightimage">HeroFightImage</string>
 </resources>

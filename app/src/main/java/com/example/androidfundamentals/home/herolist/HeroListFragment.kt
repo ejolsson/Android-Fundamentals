@@ -55,7 +55,7 @@ class HeroListFragment(): Fragment(), HeroClicked {
                     is SharedViewModel.HeroListState.OnHeroSelected -> {
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.fFragment, FightFragment(it.hero))
-                            .addToBackStack(HeroActivity::javaClass.name)
+                            .addToBackStack(HeroActivity::javaClass.name) // "back button" goes back to login
                             .commit()
                     }
                 }

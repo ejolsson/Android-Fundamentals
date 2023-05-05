@@ -34,40 +34,50 @@
         tools:layout_editor_absoluteX="144dp"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        />
+        android:contentDescription="@string/herofightimage" />
 
     <TextView
         android:id="@+id/life_bar_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/life"
+        android:gravity="center"
+        android:text="@string/life_readout"
         android:textColor="@color/white"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/hero_battle_pic"
         app:layout_constraintTop_toBottomOf="@+id/hero_battle_pic" />
 
-    <Space
-        android:id="@+id/life_bar_space"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/white"
+    <ProgressBar
+        android:id="@+id/lifebar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/life_bar_label"
+        android:max="100"
+        android:progress="75"
+        android:background="@color/cardview_dark_background"
         />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/life_bar_space">
+        app:layout_constraintTop_toBottomOf="@+id/lifebar">
 
         <Button
             android:id="@+id/fight_button"
