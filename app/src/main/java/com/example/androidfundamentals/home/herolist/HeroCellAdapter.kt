@@ -20,8 +20,7 @@ class HeroCellAdapter(
 
     class MainActivityViewHolder(private var item: HeroCellBinding, private val callback: HeroClicked): RecyclerView.ViewHolder(item.root) {
         fun showHero(hero: Hero, par: Boolean) {
-            item.tvHeroNameCell.text = hero.name // specific hero name
-//            Picasso.get().load("https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300").into(item.ivHeroThumb)
+            item.tvHeroNameCell.text = hero.name
             Picasso.get().load(hero.photo).into(item.ivHeroThumb)
             item.lLHeroCell.setOnClickListener {// when the cell is clicked...
                 callback.heroSelectionClicked(hero)

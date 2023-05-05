@@ -17,19 +17,18 @@ import okhttp3.Request
 import java.lang.Exception
 import kotlin.random.Random
 
-// ?? Should HeroMainActivity and HeroListFragment have separate viewModels?
 class SharedViewModel: ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
-//    val uiState: StateFlow<UiState> = _uiState // Conflicting declarations: public final val uiState:
+    private val _heroState = MutableStateFlow<HeroState>(HeroState.Idle)
+    val heroState: StateFlow<HeroState> = _heroState
 
     private val selectedHero: Hero? = null
-//    var state: StateFlow<String> = _state
-//private val token = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJleHBpcmF0aW9uIjo2NDA5MjIxMTIwMCwiZW1haWwiOiJjZHRsQHBydWVibWFpbC5lcyIsImlkZW50aWZ5IjoiRDIwRTAwQTktODY0NC00MUYyLUE0OUYtN0ZDRUY2MTVFMTQ3In0.wMqJfh5qcs5tU6hu2VxT4OV9Svd7BGBA7HsVpKhx5-8"
+    private val token = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJleHBpcmF0aW9uIjo2NDA5MjIxMTIwMCwiZW1haWwiOiJjZHRsQHBydWVibWFpbC5lcyIsImlkZW50aWZ5IjoiRDIwRTAwQTktODY0NC00MUYyLUE0OUYtN0ZDRUY2MTVFMTQ3In0.wMqJfh5qcs5tU6hu2VxT4OV9Svd7BGBA7HsVpKhx5-8"
 
-    var heroesFight: List<Hero> = listOf()
+    var heroesFight: List<Hero> = listOf() // initialize blank
 
     fun fetchHeroes() {
+        Log.w("Tag", "fetchHeroes...")
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
             val baseUrl = "https://dragonball.keepcoding.education/api/" // Todo: pull out
@@ -37,9 +36,10 @@ class SharedViewModel: ViewModel() {
             val body = FormBody.Builder()
                 .add("name", "") // "" asks for all heroes
                 .build()
+            Log.w("Tag","tokenPublic used for fetchHeroes = $tokenPublic")
             val request = Request.Builder()
                 .url(url)
-                .addHeader("Authorization","Bearer $tokenPublic")
+                .addHeader("Authorization","Bearer $token")
                 .post(body)
                 .build()
             val call = client.newCall(request)
@@ -54,19 +54,17 @@ class SharedViewModel: ViewModel() {
                     heroesFight = heroDtoArray.toList().map { Hero(it.name, it.photo) } // map API data to local model for simulation
                     Log.w("Tag", "Shared ViewModel > getHeroes() > heroesFight = $heroesFight")
 
-                    _uiState.value = UiState.OnHeroReceived(heroDtoArray.toList().map {
+                    _heroState.value = HeroState.OnHeroReceived(heroDtoArray.toList().map {
                         Hero(it.name, it.photo)
                     })
                 } catch (ex: Exception) {
-                    _uiState.value= UiState.Error("Something went wrong in the response")
+                    _heroState.value= HeroState.ErrorJSON("Something went wrong in the fetchHeroes response")
                 }
-            } ?: run { _uiState.value = UiState.Error("Something went wrong in the request") }
-            Log.w("Tag", "SharedVM > getHeroes L72 > heroesFight = $heroesFight")
+            } ?: run { _heroState.value = HeroState.ErrorResponse("Something went wrong in the fetchHeroes request") }
+            Log.w("Tag", "SharedVM > getHeroes L65 > heroesFight = $heroesFight")
         }
 
     }
-
-    val uiState: StateFlow<UiState> = _uiState
 
     val goku = Hero("GoKu", "https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300")
     private var life:Double = 100.0
@@ -76,20 +74,18 @@ class SharedViewModel: ViewModel() {
 
     fun heal(life:Int) = life + 20
 
-    fun takeDamage() = run {
-        viewModelScope.launch {
-            life -= 0.1 * randomNumber
-            _uiState.value = UiState.LifeRemaining(life)
-        }
-//        _uiState.value = UiResponse.Ended()
-    }
+//    fun takeDamage() = run {
+//        viewModelScope.launch {
+//            life -= 0.1 * randomNumber
+//            _heroState.value = HeroState.LifeRemaining(life)
+//        }
+//        _heroState.value = UiResponse.Ended()
+//    }
 
-    sealed class UiState {
-        object Idle: UiState()
-        data class Error(val error: String): UiState()
-//        data class OnLoginReceived(val response: String): UiState()
-        data class OnHeroReceived(val heroes: List<Hero>): UiState()
-        data class LifeRemaining(var life: Double): UiState()
-
+    sealed class HeroState {
+        object Idle: HeroState()
+        data class OnHeroReceived(val heroes: List<Hero>): HeroState()
+        data class ErrorJSON(val error: String): HeroState()
+        data class ErrorResponse(val error: String): HeroState()
     }
 }

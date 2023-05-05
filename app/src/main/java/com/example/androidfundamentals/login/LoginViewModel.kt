@@ -3,14 +3,12 @@ package com.example.androidfundamentals.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.androidfundamentals.home.SharedViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.Credentials
 import okhttp3.FormBody
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
@@ -18,10 +16,10 @@ var tokenPublic: String = ""
 
 class LoginViewModel : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Idle) // initialize state to Idle
-    val uiState: StateFlow<UiState> = _uiState
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle) // initialize state to Idle
+    val loginState: StateFlow<LoginState> = _loginState
 
-    var token: String = "" // remove in favor of tokenGobal?
+    var token: String = "" // returned by userLogin
 
 //    init {
 //        userLogin()
@@ -48,18 +46,17 @@ class LoginViewModel : ViewModel() {
             response.body?.let { responseBody ->
                 tokenPublic = responseBody.string() // had 'token' before
                 Log.w("Tag","Login successful. tokenPublic = ${tokenPublic}")
-                _uiState.value= UiState.OnLoginReceived(tokenPublic) // had responseBody.string()
-            } ?: run { _uiState.value = UiState.Error("Something went wrong in the request") }
+                _loginState.value= LoginState.OnLoginReceived(tokenPublic) // had responseBody.string()
+            } ?: run { _loginState.value = LoginState.Error("Something went wrong in the request") }
 
         }
-        // Change/navigate UI post login
         return token
     }
 
-    sealed class UiState {
-        object Idle: UiState()
-        data class Error(val error: String): UiState()
-        data class OnLoginReceived(val text: String): UiState()
+    sealed class LoginState {
+        object Idle: LoginState()
+        data class Error(val error: String): LoginState()
+        data class OnLoginReceived(val text: String): LoginState()
     }
 }
 

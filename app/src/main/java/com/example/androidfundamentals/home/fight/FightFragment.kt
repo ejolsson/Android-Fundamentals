@@ -43,7 +43,7 @@ class FightFragment(private val hero: Hero) : Fragment() {
 //
 //    private fun initCollects() {
 //        lifecycleScope.launch {
-//            viewModel.uiState.collect{
+//            viewModel.heroState.collect{
 //                Log.w("Tag", "Life updated")
 //                when(it) { // must list our all 3 UiResponse cases
 //                    is FightViewModel.UiResponse.Started -> binding.lifeBarLabel.text = "100%"
