@@ -8,9 +8,7 @@ import com.example.androidfundamentals.databinding.HeroCellBinding
 import com.squareup.picasso.Picasso
 
 interface HeroClicked {
-    fun heroSelectionClicked(hero: Hero) {
-        // Todo: navigate to FightFragment & layout
-    }
+    fun heroSelectionClicked(hero: Hero)
 }// Show scrollable list of heroes (name & picture)
 
 class HeroCellAdapter(
@@ -19,7 +17,7 @@ class HeroCellAdapter(
     ): RecyclerView.Adapter<HeroCellAdapter.MainActivityViewHolder>() {
 
     class MainActivityViewHolder(private var item: HeroCellBinding, private val callback: HeroClicked): RecyclerView.ViewHolder(item.root) {
-        fun showHero(hero: Hero, par: Boolean) {
+        fun showHero(hero: Hero) {
             item.tvHeroNameCell.text = hero.name
             Picasso.get().load(hero.photo).into(item.ivHeroThumb)
             item.lLHeroCell.setOnClickListener {// when the cell is clicked...
@@ -41,6 +39,6 @@ class HeroCellAdapter(
 
     // not sure what section below does...
     override fun onBindViewHolder(holder: MainActivityViewHolder, position: Int) {
-        holder.showHero(listHeroes[position], position % 2 == 0)
+        holder.showHero(listHeroes[position])
     }
 }

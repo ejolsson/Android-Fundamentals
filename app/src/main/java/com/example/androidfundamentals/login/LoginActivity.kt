@@ -14,7 +14,6 @@ import com.example.androidfundamentals.home.SharedViewModel
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
-    private val sViewModel: SharedViewModel by viewModels()
     private val viewModel : LoginViewModel by viewModels() // L5, 0.35.00, extra lib needed
     private lateinit var binding : LoginBinding
 
@@ -27,7 +26,10 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.loginState.collect(){
                 when(it){
-                    is LoginViewModel.LoginState.OnLoginReceived -> Log.w("Tag", "Login success, token = $tokenPublic")
+                    is LoginViewModel.LoginState.OnLoginReceived -> {
+                        Log.w("Tag", "Login success, token = ${it.token}")
+                        HeroActivity.launch(this@LoginActivity, it.token)
+                    }
                     is LoginViewModel.LoginState.Error -> Log.w("Tag", "Login error")
                     is LoginViewModel.LoginState.Idle -> Unit
                 }
@@ -45,16 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener {
             Log.w("Tag","Login button tapped")
-//            Log.w("Tag", "email = ${email.text}")
-//            Log.w("Tag", "password = ${password.text}")
-//            sViewModel.fetchHeroes()
-//            tokenPublic = viewModel.userLogin("${email.text}", "${password.text}")
-
-            tokenPublic = viewModel.userLogin(email,password) // todo:Remove
-
-            Log.w("Tag", "token post api call = $tokenPublic") // empty due to timing. Delete this print line. will only work w/ added complexity
-
-            HeroActivity.launch(this, token = tokenPublic)
+            viewModel.userLogin(email,password) // todo:Remove
         }
     }
 

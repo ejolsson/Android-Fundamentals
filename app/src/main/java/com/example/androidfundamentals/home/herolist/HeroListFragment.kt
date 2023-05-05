@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidfundamentals.R
 import com.example.androidfundamentals.data.Hero
-import com.example.androidfundamentals.data.listOfHeroesSample
 import com.example.androidfundamentals.databinding.HeroListFragmentBinding
 import com.example.androidfundamentals.home.HeroActivity
 import com.example.androidfundamentals.home.SharedViewModel
@@ -21,9 +21,8 @@ import kotlinx.coroutines.launch
 class HeroListFragment(): Fragment(), HeroClicked {
 
     private lateinit var binding: HeroListFragmentBinding // UI
-    private val viewModel: SharedViewModel by viewModels() // 1st VM, ensure HeroListVM is typed as viewModel()
-//    val adapter = HeroCellAdapter(viewModel.heroesFight, this)
-
+    private val viewModel: SharedViewModel by activityViewModels() // 1st VM, ensure HeroListVM is typed as viewModel()
+    private lateinit var adapter: HeroCellAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,44 +45,38 @@ class HeroListFragment(): Fragment(), HeroClicked {
 //        val adapter = HeroCellAdapter(heroesToShow, this) // GTG, instantiate adapter, send List<Hero>
 
         // check hero data right before
-        Log.w("Tag", "HeroListFrag > onViewCreated > heroesFight = ${viewModel.heroesFight}") // empty, data not ready from API at this point of code execution
 //
-        val heroesToShow = viewModel.heroesFight
-        val adapter = HeroCellAdapter(heroesToShow, this) // instantiate adapter, send List<Hero>
 
-        binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
-        binding.rvListOfHeroes.adapter = adapter
 
     } // load data in adapters
 
     private fun setObservers() { // listen for async events, do some action
         viewLifecycleOwner.lifecycleScope.launch{
-            viewModel.heroState.collect {
+            viewModel.heroListState.collect {
                 when(it) {
-                    is SharedViewModel.HeroState.OnHeroReceived -> {
-                        Log.w("Tag", "HeroListFrag > onViewCreated > heroesFight = ${viewModel.heroesFight}") // empty
-
-                        // TODO update UI. Things I've tried:
-//                        onViewCreated().heroesToShow = viewModel.heroesFight
-//                        binding.rvListOfHeroes.layoutManager.relaunch
-//                        adapter.reload or refresh...
-
-//                        binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
-//                        binding.rvListOfHeroes.adapter = adapter
-
+                    is SharedViewModel.HeroListState.OnHeroListReceived -> {
+                        Log.w("Tag", "HeroListFrag > onViewCreated > heroesFight = ${it.heroes}") // empty
+                        adapter = HeroCellAdapter(it.heroes, this@HeroListFragment) // instantiate adapter, send List<Hero>
+                        binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
+                        binding.rvListOfHeroes.adapter = adapter
                     }
-                    is SharedViewModel.HeroState.ErrorJSON -> Log.w("Tag", "HeroState ErrorJSON")
-                    is SharedViewModel.HeroState.ErrorResponse -> Log.w("Tag", "HeroState ErrorResponse")
-                    is SharedViewModel.HeroState.Idle -> Unit
+                    is SharedViewModel.HeroListState.ErrorJSON ->
+                        Log.w("Tag", "HeroState ErrorJSON")
+                    is SharedViewModel.HeroListState.ErrorResponse ->
+                        Log.w("Tag", "HeroState ErrorResponse")
+                    is SharedViewModel.HeroListState.Idle -> Unit
+                    is SharedViewModel.HeroListState.OnHeroSelected -> {
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.fFragment, FightFragment(it.hero))
+                            .addToBackStack(HeroActivity::javaClass.name)
+                            .commit()
+                    }
                 }
             }
         }
     }
 
     override fun heroSelectionClicked(hero: Hero) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fFragment, FightFragment(hero))
-            .addToBackStack(HeroActivity::javaClass.name)
-            .commit()
+        viewModel.selectHero(hero)
     } // send clicked hero to battle simulation
 }

@@ -12,20 +12,16 @@ import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-var tokenPublic: String = ""
-
 class LoginViewModel : ViewModel() {
 
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle) // initialize state to Idle
     val loginState: StateFlow<LoginState> = _loginState
 
-    var token: String = "" // returned by userLogin
-
 //    init {
 //        userLogin()
 //    }
 
-    fun userLogin(email: String, password: String): String {
+    fun userLogin(email: String, password: String) {
     Log.w("Tag","fun userLogin started...")
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
@@ -41,22 +37,20 @@ class LoginViewModel : ViewModel() {
                 .build()
             val call = client.newCall(request)
             val response = call.execute()
-            println(response.body)
 
             response.body?.let { responseBody ->
-                tokenPublic = responseBody.string() // had 'token' before
+                val tokenPublic = responseBody.string() // had 'token' before
                 Log.w("Tag","Login successful. tokenPublic = ${tokenPublic}")
                 _loginState.value= LoginState.OnLoginReceived(tokenPublic) // had responseBody.string()
             } ?: run { _loginState.value = LoginState.Error("Something went wrong in the request") }
 
         }
-        return token
     }
 
     sealed class LoginState {
         object Idle: LoginState()
         data class Error(val error: String): LoginState()
-        data class OnLoginReceived(val text: String): LoginState()
+        data class OnLoginReceived(val token: String): LoginState()
     }
 }
 

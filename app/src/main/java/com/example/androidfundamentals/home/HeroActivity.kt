@@ -8,15 +8,15 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidfundamentals.databinding.HeroActivityBinding
-import com.example.androidfundamentals.login.tokenPublic
 
 class HeroActivity : AppCompatActivity() {
 
     companion object {
 
+        const val TAG_TOKEN = "TAG_TOKEN"
         fun launch(context: Context, token: String) {
             val intent = Intent(context, HeroActivity::class.java)
-            intent.putExtra(token, tokenPublic)
+            intent.putExtra(TAG_TOKEN, token)
             Log.w("Tag","companion token = $token")
             context.startActivity(intent)
         }
@@ -35,6 +35,8 @@ class HeroActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(heroActivityBinding.fFragment.id, HeroListFragment())
             .commitNow()
-    sharedViewModel.fetchHeroes() // works in log
+        intent.extras?.getString(TAG_TOKEN, "")?.let { token ->
+            sharedViewModel.fetchHeroes(token) // works in log
+        }
     }
 }
