@@ -5,7 +5,9 @@ package com.example.androidfundamentals.data
 data class Hero(
     val name: String,
     val photo: String
-)
+) {
+    var life: Int = 100 // life points
+}
 
 // sample data
 val listOfHeroesSample = listOf(

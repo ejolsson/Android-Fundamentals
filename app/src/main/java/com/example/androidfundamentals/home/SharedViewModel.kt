@@ -5,6 +5,7 @@ import com.example.androidfundamentals.data.Hero
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidfundamentals.data.HeroDTO
+import com.example.androidfundamentals.databinding.HeroFightFragmentBinding
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,7 @@ class SharedViewModel: ViewModel() {
     val heroListState: StateFlow<HeroListState> = _heroListState
     private val _heroState = MutableStateFlow<HeroState>(HeroState.Idle)
     val heroState: StateFlow<HeroState> = _heroState
+    private lateinit var binding: HeroFightFragmentBinding
 
     fun fetchHeroes(token: String) {
         Log.w("Tag", "fetchHeroes...")
@@ -67,20 +69,28 @@ class SharedViewModel: ViewModel() {
     }
 
     val goku = Hero("GoKu", "https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300")
-    private var life:Double = 100.0
+    private var life:Int = 100
     private var damageLevels = 6
 
-    val randomNumber = Random.nextInt(1,damageLevels)
+    private fun generateRandomNumber(levels: Int): Int {
+        return Random.nextInt(1, levels)
+    }
 
-    fun heal(life:Int) = life + 20
+    fun takeDamage() {
+        val damage = generateRandomNumber(damageLevels)
+        life -= 10 * damage
+//        binding.lifebar.progress = life.toInt()
+        Log.w("Tag", "Damage = -${damage}0, life = $life")
+    }
+    fun fight() {
+        Log.w("Tag", "Life = $life")
+    }
 
-//    fun takeDamage() = run {
-//        viewModelScope.launch {
-//            life -= 0.1 * randomNumber
-//            _heroState.value = HeroState.LifeRemaining(life)
-//        }
-//        _heroState.value = UiResponse.Ended()
-//    }
+    fun heal() {
+        life += 20
+//        binding.lifebar.progress = life
+        Log.w("Tag", "Healng = +20, Life = $life")
+    }
 
     sealed class HeroListState {
         object Idle: HeroListState()

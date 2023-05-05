@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             Log.w("Tag","Login button tapped")
             viewModel.userLogin(emailRapid,passwordRapid) // todo:Remove
-            Log.w("Tag", "${email.text}")
+//            Log.w("Tag", "email: ${email.text} password: ${password.text}")
 //            viewModel.userLogin("${email.text}","${password.text}")
         }
     }
