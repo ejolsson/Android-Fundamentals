@@ -14,19 +14,14 @@ import okhttp3.Request
 
 class LoginViewModel : ViewModel() {
 
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle) // initialize state to Idle
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
     val loginState: StateFlow<LoginState> = _loginState
-
-//    init {
-//        userLogin()
-//    }
 
     fun userLogin(email: String, password: String) {
     Log.w("Tag","fun userLogin started...")
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
-            // https://dragonball.keepcoding.education/api/auth/login
-            val baseUrl = "https://dragonball.keepcoding.education/api/" // Todo: pull out
+            val baseUrl = "https://dragonball.keepcoding.education/api/"
             val url = "${baseUrl}auth/login"
             val credentials = Credentials.basic(email, password)
             val formBody = FormBody.Builder().build()
@@ -39,11 +34,10 @@ class LoginViewModel : ViewModel() {
             val response = call.execute()
 
             response.body?.let { responseBody ->
-                val tokenPublic = responseBody.string() // had 'token' before
-                Log.w("Tag","Login successful. tokenPublic = ${tokenPublic}")
-                _loginState.value= LoginState.OnLoginReceived(tokenPublic) // had responseBody.string()
+                val tokenPublic = responseBody.string()
+                Log.w("Tag","Login successful. tokenPublic = $tokenPublic")
+                _loginState.value= LoginState.OnLoginReceived(tokenPublic)
             } ?: run { _loginState.value = LoginState.Error("Something went wrong in the request") }
-
         }
     }
 

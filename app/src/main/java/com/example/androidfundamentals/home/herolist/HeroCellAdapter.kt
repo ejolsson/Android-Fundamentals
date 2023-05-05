@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso
 
 interface HeroClicked {
     fun heroSelectionClicked(hero: Hero)
-}// Show scrollable list of heroes (name & picture)
+}
 
 class HeroCellAdapter(
     private val listHeroes: List<Hero>,
@@ -20,7 +20,7 @@ class HeroCellAdapter(
         fun showHero(hero: Hero) {
             item.tvHeroNameCell.text = hero.name
             Picasso.get().load(hero.photo).into(item.ivHeroThumb)
-            item.lLHeroCell.setOnClickListener {// when the cell is clicked...
+            item.lLHeroCell.setOnClickListener {
                 callback.heroSelectionClicked(hero)
             }
         }
@@ -37,7 +37,6 @@ class HeroCellAdapter(
         return listHeroes.size
     }
 
-    // not sure what section below does...
     override fun onBindViewHolder(holder: MainActivityViewHolder, position: Int) {
         holder.showHero(listHeroes[position])
     }

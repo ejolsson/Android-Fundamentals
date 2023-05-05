@@ -36,26 +36,22 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        //Rapidloginfortesting
-        val email = "ejolsson@gmail.com"//todo:Remove.Testingonly.
-        val password = "vamosRafa2023!"//todo:Remove.Testingonly.
+        val emailRapid = "ejolsson@gmail.com"//todo:Remove.Testingonly.
+        val passwordRapid = "vamosRafa2023!"//todo:Remove.Testingonly.
 
-        // connect UI to usable fields
-//        val email = findViewById<EditText>(R.id.etEmail)
-//        val password = findViewById<EditText>(R.id.etPassword)
+        val email = findViewById<EditText>(R.id.etEmail)
+        val password = findViewById<EditText>(R.id.etPassword)
         val loginButton = findViewById<Button>(R.id.bLogin)
 
         loginButton.setOnClickListener {
             Log.w("Tag","Login button tapped")
-            viewModel.userLogin(email,password) // todo:Remove
+            viewModel.userLogin(emailRapid,passwordRapid) // todo:Remove
+            Log.w("Tag", "${email.text}")
+//            viewModel.userLogin("${email.text}","${password.text}")
         }
     }
 
-
-
-
     // Persistence - Optional
-
 
 //    private fun loadFromPreferences() {
 //        getPreferences(Context.MODE_PRIVATE).apply {

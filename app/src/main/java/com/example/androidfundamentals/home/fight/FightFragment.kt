@@ -26,30 +26,4 @@ class FightFragment(private val hero: Hero) : Fragment() {
         Picasso.get().load(hero.photo).into(binding.heroBattlePic)
         return binding.root
     }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        binding.root.setOnClickListener {
-//            // Callback methods, like fetchHeroes. Should this go under viewModel?
-//            // callback.onClick
-//        }
-//    }
-
-//    private fun initListener() {
-//        binding.takeDamageButton.setOnClickListener() {
-//            viewModel.takeDamage()
-//        }
-//    }
-//
-//    private fun initCollects() {
-//        lifecycleScope.launch {
-//            viewModel.heroState.collect{
-//                Log.w("Tag", "Life updated")
-//                when(it) { // must list our all 3 UiResponse cases
-//                    is FightViewModel.UiResponse.Started -> binding.lifeBarLabel.text = "100%"
-//                    is FightViewModel.UiResponse.LifeRemaining -> binding.lifeBarLabel.text = it.life.toString()
-//                }
-//            }
-//        }
-//    }
 }

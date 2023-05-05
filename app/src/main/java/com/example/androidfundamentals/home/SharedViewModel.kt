@@ -20,13 +20,8 @@ class SharedViewModel: ViewModel() {
 
     private val _heroListState = MutableStateFlow<HeroListState>(HeroListState.Idle)
     val heroListState: StateFlow<HeroListState> = _heroListState
-
     private val _heroState = MutableStateFlow<HeroState>(HeroState.Idle)
     val heroState: StateFlow<HeroState> = _heroState
-
-//    private val selectedHero: Hero? = null
-//    private val token = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJleHBpcmF0aW9uIjo2NDA5MjIxMTIwMCwiZW1haWwiOiJjZHRsQHBydWVibWFpbC5lcyIsImlkZW50aWZ5IjoiRDIwRTAwQTktODY0NC00MUYyLUE0OUYtN0ZDRUY2MTVFMTQ3In0.wMqJfh5qcs5tU6hu2VxT4OV9Svd7BGBA7HsVpKhx5-8"
-
 
     fun fetchHeroes(token: String) {
         Log.w("Tag", "fetchHeroes...")
@@ -51,15 +46,10 @@ class SharedViewModel: ViewModel() {
                     try {
                         val response = responseBody.string()
                         val heroDtoArray = gson.fromJson(response, Array<HeroDTO>::class.java)
-
-                        Log.w("Tag", "heroDtoArray.asList = ${heroDtoArray.asList()}") // GTG
-
+                        Log.w("Tag", "heroDtoArray.asList = ${heroDtoArray.asList()}")
                         val heroesFight = heroDtoArray.toList().map { Hero(it.name, it.photo) } // map API data to local model for simulation
                         Log.w("Tag", "Shared ViewModel > getHeroes() > heroesFight = $heroesFight")
-
-                        _heroListState.value = HeroListState.OnHeroListReceived(
-                            heroesFight
-                        )
+                        _heroListState.value = HeroListState.OnHeroListReceived(heroesFight)
                     } catch (ex: Exception) {
                         _heroListState.value= HeroListState.ErrorJSON("Something went wrong in the fetchHeroes response")
                     }
@@ -98,11 +88,9 @@ class SharedViewModel: ViewModel() {
         data class OnHeroSelected(val hero: Hero): HeroListState()
         data class ErrorJSON(val error: String): HeroListState()
         data class ErrorResponse(val error: String): HeroListState()
-
     }
     sealed class HeroState {
         object Idle: HeroState()
         data class OnHeroReceived(val hero: Hero): HeroState()
-
     }
 }

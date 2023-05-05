@@ -22,21 +22,20 @@ class HeroActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var heroActivityBinding: HeroActivityBinding // 1st xml UI setup
-
+    private lateinit var heroActivityBinding: HeroActivityBinding
     private val sharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.w("Tag", "HeroAct > onCreate...")
         super.onCreate(savedInstanceState)
         heroActivityBinding = HeroActivityBinding.inflate(layoutInflater)
-        setContentView(heroActivityBinding.root) // initialize UI
+        setContentView(heroActivityBinding.root)
         supportFragmentManager
             .beginTransaction()
             .replace(heroActivityBinding.fFragment.id, HeroListFragment())
             .commitNow()
         intent.extras?.getString(TAG_TOKEN, "")?.let { token ->
-            sharedViewModel.fetchHeroes(token) // works in log
+            sharedViewModel.fetchHeroes(token)
         }
     }
 }
