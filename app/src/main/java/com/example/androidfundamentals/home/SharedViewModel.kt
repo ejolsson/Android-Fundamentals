@@ -48,7 +48,7 @@ class SharedViewModel: ViewModel() {
                 val gson = Gson()
                 try {
                     val heroDtoArray = gson.fromJson(responseBody.string(), Array<HeroDTO>::class.java)
-                    Log.w("Tag", "heroDtoArray.size = ${heroDtoArray.toList()}") // GTG
+//                    Log.w("Tag", "heroDtoArray.size = ${heroDtoArray.toList()}") // GTG
                     Log.w("Tag", "heroDtoArray.asList = ${heroDtoArray.asList()}") // GTG
 
                     heroesFight = heroDtoArray.toList().map { Hero(it.name, it.photo) } // map API data to local model for simulation

@@ -10,10 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import com.example.androidfundamentals.R
 import com.example.androidfundamentals.databinding.LoginBinding
 import com.example.androidfundamentals.home.HeroActivity
+import com.example.androidfundamentals.home.SharedViewModel
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
-
+    private val sViewModel: SharedViewModel by viewModels()
     private val viewModel : LoginViewModel by viewModels() // L5, 0.35.00, extra lib needed
     private lateinit var binding : LoginBinding
 
@@ -27,27 +28,31 @@ class LoginActivity : AppCompatActivity() {
             viewModel.loginState.collect(){
                 when(it){
                     is LoginViewModel.LoginState.OnLoginReceived -> Log.w("Tag", "Login success, token = $tokenPublic")
-                    is LoginViewModel.LoginState.Error -> Log.w("Tag", "Error")
+                    is LoginViewModel.LoginState.Error -> Log.w("Tag", "Login error")
                     is LoginViewModel.LoginState.Idle -> Unit
                 }
             }
         }
 
-
+        //Rapidloginfortesting
+        val email = "ejolsson@gmail.com"//todo:Remove.Testingonly.
+        val password = "vamosRafa2023!"//todo:Remove.Testingonly.
 
         // connect UI to usable fields
-        val email = findViewById<EditText>(R.id.etEmail)
-        val password = findViewById<EditText>(R.id.etPassword)
+//        val email = findViewById<EditText>(R.id.etEmail)
+//        val password = findViewById<EditText>(R.id.etPassword)
         val loginButton = findViewById<Button>(R.id.bLogin)
 
         loginButton.setOnClickListener {
             Log.w("Tag","Login button tapped")
-            Log.w("Tag", "email = ${email.text}")
-            Log.w("Tag", "password = ${password.text}")
+//            Log.w("Tag", "email = ${email.text}")
+//            Log.w("Tag", "password = ${password.text}")
+//            sViewModel.fetchHeroes()
+//            tokenPublic = viewModel.userLogin("${email.text}", "${password.text}")
 
-            tokenPublic = viewModel.userLogin("${email.text}", "${password.text}")
+            tokenPublic = viewModel.userLogin(email,password) // todo:Remove
 
-            Log.w("Tag", "token post api call = $tokenPublic") // empty
+            Log.w("Tag", "token post api call = $tokenPublic") // empty due to timing. Delete this print line. will only work w/ added complexity
 
             HeroActivity.launch(this, token = tokenPublic)
         }

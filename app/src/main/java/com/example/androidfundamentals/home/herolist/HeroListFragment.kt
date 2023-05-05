@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidfundamentals.R
 import com.example.androidfundamentals.data.Hero
+import com.example.androidfundamentals.data.listOfHeroesSample
 import com.example.androidfundamentals.databinding.HeroListFragmentBinding
 import com.example.androidfundamentals.home.HeroActivity
 import com.example.androidfundamentals.home.SharedViewModel
@@ -21,7 +22,7 @@ class HeroListFragment(): Fragment(), HeroClicked {
 
     private lateinit var binding: HeroListFragmentBinding // UI
     private val viewModel: SharedViewModel by viewModels() // 1st VM, ensure HeroListVM is typed as viewModel()
-    val adapter = HeroCellAdapter(viewModel.heroesFight, this)
+//    val adapter = HeroCellAdapter(viewModel.heroesFight, this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +39,7 @@ class HeroListFragment(): Fragment(), HeroClicked {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchHeroes()
+//        viewModel.fetchHeroes()
 
         // TODO: Remove use of sample data below
 //        val heroesToShow = listOfHeroesSample
@@ -48,7 +49,7 @@ class HeroListFragment(): Fragment(), HeroClicked {
         Log.w("Tag", "HeroListFrag > onViewCreated > heroesFight = ${viewModel.heroesFight}") // empty, data not ready from API at this point of code execution
 //
         val heroesToShow = viewModel.heroesFight
-//        val adapter = HeroCellAdapter(heroesToShow, this) // instantiate adapter, send List<Hero>
+        val adapter = HeroCellAdapter(heroesToShow, this) // instantiate adapter, send List<Hero>
 
         binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
         binding.rvListOfHeroes.adapter = adapter
@@ -66,6 +67,9 @@ class HeroListFragment(): Fragment(), HeroClicked {
 //                        onViewCreated().heroesToShow = viewModel.heroesFight
 //                        binding.rvListOfHeroes.layoutManager.relaunch
 //                        adapter.reload or refresh...
+
+//                        binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
+//                        binding.rvListOfHeroes.adapter = adapter
 
                     }
                     is SharedViewModel.HeroState.ErrorJSON -> Log.w("Tag", "HeroState ErrorJSON")
