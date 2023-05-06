@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.androidfundamentals.R
 import com.example.androidfundamentals.data.Hero
 import com.example.androidfundamentals.databinding.HeroFightFragmentBinding
+import com.example.androidfundamentals.home.HeroActivity
 import com.example.androidfundamentals.home.SharedViewModel
+import com.example.androidfundamentals.home.herolist.HeroListFragment
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,6 +28,18 @@ class FightFragment(private val hero: Hero) : Fragment() {
     private val viewModel: SharedViewModel by activityViewModels()
     private var damageTint: Float = 0.0F
 
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.fFragment, HeroListFragment())
+//                .addToBackStack(HeroActivity::javaClass.name)
+//                .commit()
+//        }
+//
+//        callback
+//    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,8 +51,6 @@ class FightFragment(private val hero: Hero) : Fragment() {
         Picasso.get().load(hero.photo).into(binding.ivHeroFightPic)
         Log.w("Tag FightFrag", "FightFrag > onCreateView ********")
         setObservers()
-//        var life: Int = 100
-//        binding.lifebar.progress = life
         return binding.root
     }
 
@@ -71,7 +84,8 @@ class FightFragment(private val hero: Hero) : Fragment() {
             // after
             Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.life}")
             if (hero.life <= 0)  {
-
+                Log.w("Tag FightFrag", "Life <= 0")
+                viewModel.returnToHeroList()
             }
         }
 
@@ -109,6 +123,12 @@ class FightFragment(private val hero: Hero) : Fragment() {
 //                            .replace(R.id.fFragment, HeroListFragment())
 //                            .addToBackStack(HeroListFragment::javaClass.name)
 //                            .commit()
+                    }
+                    is SharedViewModel.HeroState.HeroLifeZero -> {
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.fFragment, HeroListFragment())
+                            .addToBackStack(HeroActivity::javaClass.name)
+                            .commit()
                     }
                     is SharedViewModel.HeroState.Idle -> Unit
                 }

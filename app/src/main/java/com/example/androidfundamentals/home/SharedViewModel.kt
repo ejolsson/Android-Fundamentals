@@ -71,6 +71,10 @@ class SharedViewModel: ViewModel() {
         _heroState.value = HeroState.OnHeroReceived(hero)
     }
 
+    fun returnToHeroList() {
+        _heroState.value = HeroState.HeroLifeZero(hero)
+    }
+
     private var life:Int = 100
     private var damageLevels = 6
 
@@ -79,26 +83,17 @@ class SharedViewModel: ViewModel() {
     }
 
     fun takeDamage(lifeBefore: Int):Int {
-
         Log.w("Tag", "fun takeDamage...")
-
         val damage = generateRandomNumber(damageLevels)
-
         val lifeAfter = lifeBefore - 10 * damage
-
         Log.w("Tag", "Damage = -${damage}0, life = $lifeAfter")
-
         return lifeAfter
     }
 
     fun heal(lifeBefore: Int):Int {
-
         Log.w("Tag", "fun heal...")
-
         val lifeAfter = lifeBefore + 20
-
         Log.w("Tag", "Healng = +20, Life = $lifeAfter")
-
         return lifeAfter
     }
 
@@ -112,5 +107,6 @@ class SharedViewModel: ViewModel() {
     sealed class HeroState {
         object Idle: HeroState()
         data class OnHeroReceived(val hero: Hero): HeroState()
+        data class HeroLifeZero(val hero: Hero): HeroState()
     }
 }
