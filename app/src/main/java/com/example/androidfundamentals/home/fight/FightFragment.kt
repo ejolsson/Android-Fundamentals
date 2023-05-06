@@ -44,34 +44,54 @@ class FightFragment(private val hero: Hero) : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val fightButton = getView()?.findViewById<Button>(R.id.fight_button)
         val takeDamageButton = getView()?.findViewById<Button>(R.id.take_damage_button)
         val healButton = getView()?.findViewById<Button>(R.id.heal_button)
 
         Log.w("Tag FightFrag", "Hero info: $hero")
         Log.w("Tag FightFrag", "${hero.name} life: ${hero.life}")
 
-        fightButton?.setOnClickListener {
-//            Log.w("Tag", "fightButton tapped")
-            viewModel.fight()
-        }
         takeDamageButton?.setOnClickListener {
-            Log.w("Tag FightFrag", "takeDamageButton tapped")
-            Log.w("Tag FightFrag", "Hero info: $hero")
-            Log.w("Tag FightFrag", "${hero.name} life: ${hero.life}")
-            viewModel.takeDamage()
-            binding.lifeBarLabel.text = "Life: ${hero.life.toString()}"
+
+            // initial
+            Log.w("Tag FightFrag", "FightFrag > takeDamageButton tapped")
+            Log.w("Tag FightFrag", "FightFrag > Hero info: $hero")
+            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.life}")
+
+            // fight
+            hero.life = viewModel.takeDamage(hero.life)
+
+            binding.lifeBarLabel.text = "Life ${hero.life}"
+            binding.lifebar.setProgress(hero.life,true) // show life value in progress bar
             binding.ivDamageAnimation.alpha = 0.8F
             binding.ouch.alpha = 1.0F
 //            delay(300)
 //            sleep(1000)
 //            binding.ivDamageAnimation.alpha = 0.0F
+
+            // after
+            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.life}")
+            if (hero.life <= 0)  {
+
+            }
         }
+
         healButton?.setOnClickListener {
-//            Log.w("Tag", "healButton tapped")
-            viewModel.heal()
+
+            // initial
+            Log.w("\nTag FightFrag", "FightFrag > healButton tapped")
+            Log.w("Tag FightFrag", "FightFrag > Hero info: $hero")
+            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.life}\n")
+
+            // heal
+            hero.life = viewModel.heal(hero.life)
+
+            binding.lifeBarLabel.text = "Life ${hero.life}"
+            binding.lifebar.setProgress(hero.life,true) // show life value in progress bar
             binding.ivDamageAnimation.alpha = 0.0F
             binding.ouch.alpha = 0.0F
+
+            // after
+            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.life}")
         }
 
     }
