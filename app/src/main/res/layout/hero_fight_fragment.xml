@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-
         android:layout_marginTop="24dp"
         android:text="@string/hero_name"
         android:textAlignment="center"
@@ -25,16 +24,44 @@
         tools:layout_editor_absoluteX="56dp" />
 
     <ImageView
-        android:id="@+id/hero_battle_pic"
+        android:id="@+id/ivHeroFightPic"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_gravity="center"
         android:layout_margin="20sp"
+        android:contentDescription="@string/herofightimage"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toBottomOf="@+id/hero_fight_page"
         app:srcCompat="@mipmap/login_background"
-        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteX="144dp" />
+
+    <ImageView
+        android:id="@+id/ivDamageAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/herofightimage" />
+        android:layout_margin="20sp"
+        android:alpha="0.0"
+        android:background="@color/red"
+        android:contentDescription="@string/damagetint"
+        app:layout_constraintBottom_toBottomOf="@+id/ivHeroFightPic"
+        app:layout_constraintEnd_toEndOf="@+id/ivHeroFightPic"
+        app:layout_constraintStart_toStartOf="@+id/ivHeroFightPic"
+        app:layout_constraintTop_toTopOf="@+id/ivHeroFightPic" />
+
+    <TextView
+        android:id="@+id/ouch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ouch"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:alpha="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/ivHeroFightPic"
+        app:layout_constraintEnd_toEndOf="@+id/ivHeroFightPic"
+        app:layout_constraintStart_toStartOf="@+id/ivHeroFightPic"
+        app:layout_constraintTop_toTopOf="@+id/ivDamageAnimation" />
 
     <TextView
         android:id="@+id/life_bar_label"
@@ -46,8 +73,8 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/hero_battle_pic"
-        app:layout_constraintTop_toBottomOf="@+id/hero_battle_pic" />
+        app:layout_constraintStart_toStartOf="@id/ivHeroFightPic"
+        app:layout_constraintTop_toBottomOf="@+id/ivHeroFightPic" />
 
     <ProgressBar
         android:id="@+id/lifebar"
@@ -57,12 +84,13 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:background="@color/cardview_dark_background"
+        android:max="100"
+        android:indeterminateOnly="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/life_bar_label"
-        android:max="100"
         android:progress="75"
-        android:background="@color/cardview_dark_background"
         />
 
     <LinearLayout

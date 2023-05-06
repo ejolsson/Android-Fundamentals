@@ -63,12 +63,11 @@ class SharedViewModel: ViewModel() {
         }
     }
 
-    fun selectHero(hero: Hero) {
+    fun selectHero(hero: Hero) { // called in HeroListFrag > fun heroSelectionClicked
         _heroListState.value = HeroListState.OnHeroSelected(hero)
         _heroState.value = HeroState.OnHeroReceived(hero)
     }
 
-    val goku = Hero("GoKu", "https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300")
     private var life:Int = 100
     private var damageLevels = 6
 

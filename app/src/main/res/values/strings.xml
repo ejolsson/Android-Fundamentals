@@ -14,4 +14,6 @@
     <string name="dragon_ballz_fight">Dragon Ballz Fight!</string>
     <string name="life_readout">Life 100%</string>
     <string name="herofightimage">HeroFightImage</string>
+    <string name="damagetint">DamageTint</string>
+    <string name="ouch">Ouch!</string>
 </resources>
