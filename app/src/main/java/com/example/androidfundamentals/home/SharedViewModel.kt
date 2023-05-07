@@ -31,7 +31,7 @@ class SharedViewModel: ViewModel() {
         Log.w("Tag", "fetchHeroes...")
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
-            val baseUrl = "https://dragonball.keepcoding.education/api/" // Todo: pull out
+            val baseUrl = "https://dragonball.keepcoding.education/api/"
             val url = "${baseUrl}heros/all"
             val body = FormBody.Builder()
                 .add("name", "")
@@ -52,9 +52,9 @@ class SharedViewModel: ViewModel() {
                         val heroDtoArray = gson.fromJson(response, Array<HeroDTO>::class.java)
                         Log.w("Tag", "heroDtoArray.asList = ${heroDtoArray.asList()}")
                         val heroesFight = heroDtoArray.toList().map { Hero(it.name, it.photo) } // map API data to local model for simulation
-                        Log.w("Tag", "Shared ViewModel > getHeroes() > heroesFight = $heroesFight")
+                        Log.w("Tag", "heroesFight = $heroesFight")
                         heroesLiving = heroesFight // initialize living heroes with api data
-                        Log.w("Tag", "Shared ViewModel > getHeroes() > heroesLiving = $heroesLiving")
+                        Log.w("Tag", "heroesLiving = $heroesLiving")
                         _heroListState.value = HeroListState.OnHeroListReceived(heroesFight)
                     } catch (ex: Exception) {
                         _heroListState.value= HeroListState.ErrorJSON("Something went wrong in the fetchHeroes response")
@@ -67,7 +67,7 @@ class SharedViewModel: ViewModel() {
         }
     }
 
-    fun selectHero(hero: Hero) { // called in HeroListFrag > fun heroSelectionClicked
+    fun selectHero(hero: Hero) {
         _heroListState.value = HeroListState.OnHeroSelected(hero)
         _heroState.value = HeroState.OnHeroReceived(hero)
         selectedHero = hero
@@ -106,8 +106,6 @@ class SharedViewModel: ViewModel() {
         object Idle: HeroListState()
         data class OnHeroListReceived(val heroes: List<Hero>): HeroListState()
         data class OnHeroDeath(val heroes: List<Hero>): HeroListState()
-//        data class OnHeroDeath(): HeroListState()
-
         data class OnHeroSelected(val hero: Hero): HeroListState()
         data class ErrorJSON(val error: String): HeroListState()
         data class ErrorResponse(val error: String): HeroListState()

@@ -30,7 +30,7 @@ class FightFragment(private val hero: Hero) : Fragment() {
     ): View {
         binding = HeroFightFragmentBinding.inflate(inflater)
         binding.heroFightPage.text = hero.name
-        binding.ivDamageAnimation.alpha = damageTint // initialized to 0.0F
+        binding.ivDamageAnimation.alpha = damageTint
         Picasso.get().load(hero.photo).into(binding.ivHeroFightPic)
         Log.w("Tag FightFrag", "FightFrag > onCreateView ********")
         setObservers()
@@ -78,7 +78,7 @@ class FightFragment(private val hero: Hero) : Fragment() {
         }
     }
 
-    private fun setObservers() { // listen for events, do some action
+    private fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.heroState.collect {
                 when (it) {
@@ -89,7 +89,7 @@ class FightFragment(private val hero: Hero) : Fragment() {
                     is SharedViewModel.HeroState.HeroLifeZero -> {
                         Log.w("Tag FightFrag", ".HeroLifeZero")
                         Log.w("Tag FightFrag", "Shared ViewModel > getHeroes() > heroesLiving = ${viewModel.heroesLiving}")
-                        activity?.supportFragmentManager?.popBackStack() //must have
+                        activity?.supportFragmentManager?.popBackStack()
                     }
                     is SharedViewModel.HeroState.Idle -> Unit
                 }

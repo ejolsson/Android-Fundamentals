@@ -37,23 +37,21 @@ class HeroListFragment(): Fragment(), HeroClicked {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun setObservers() { // listen for async events, do some action
+    private fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch{
-            viewModel.heroListState.collect { // -> it
+            viewModel.heroListState.collect {
                 when(it) {
                     is SharedViewModel.HeroListState.OnHeroListReceived -> {
                         Log.w("Tag HeroListFrag", ".OnHeroListReceived")
-                        Log.w("Tag HeroListFrag", "HeroListFrag > onViewCreated > heroesFight = ${it.heroes}") // empty
-
-                        it.heroes[0].currentLife = 0 // filter test... works!!
-
-                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment) // instantiate adapter, send List<Hero>
+                        Log.w("Tag HeroListFrag", "HeroListFrag > onViewCreated > heroesFight = ${it.heroes}")
+                        it.heroes[0].currentLife = 0
+                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment)
                         binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
                         binding.rvListOfHeroes.adapter = adapter
                     }
                     is SharedViewModel.HeroListState.OnHeroDeath -> {
                         Log.w("Tag HeroListFrag", ".OnHeroDeath")
-                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment) // instantiate adapter, send List<Hero>
+                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment)
                         binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
                         binding.rvListOfHeroes.adapter = adapter
                         Log.w("Tag HeroListFrag", "HeroListFrag > is ....OnHero Death > heroesLiving = ${viewModel.heroesLiving}")
@@ -77,5 +75,5 @@ class HeroListFragment(): Fragment(), HeroClicked {
 
     override fun heroSelectionClicked(hero: Hero) {
         viewModel.selectHero(hero)
-    } // send clicked hero to battle simulation
+    }
 }
