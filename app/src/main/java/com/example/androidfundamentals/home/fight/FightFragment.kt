@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.androidfundamentals.R
 import com.example.androidfundamentals.data.Hero
+import com.example.androidfundamentals.data.listOfHeroesSample
 import com.example.androidfundamentals.databinding.HeroFightFragmentBinding
 import com.example.androidfundamentals.home.HeroActivity
 import com.example.androidfundamentals.home.SharedViewModel
@@ -62,6 +63,7 @@ class FightFragment(private val hero: Hero) : Fragment() {
 
         Log.w("Tag FightFrag", "Hero info: $hero")
         Log.w("Tag FightFrag", "${hero.name} life: ${hero.life}")
+        Log.w("Tag FightFrag", "Living heroes: ${listOfHeroesSample.filter { it.life > 0 }}")
 
         takeDamageButton?.setOnClickListener {
 
