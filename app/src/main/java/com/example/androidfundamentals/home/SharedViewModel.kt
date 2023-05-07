@@ -91,10 +91,9 @@ class SharedViewModel: ViewModel() {
     }
 
     fun takeDamage(lifeBefore: Int):Int {
-        Log.w("Tag", "fun takeDamage...")
         val damage = generateRandomNumber(damageLevels)
         val lifeAfter = lifeBefore - 10 * damage
-        Log.w("Tag", "Damage = -${damage}0, life = $lifeAfter")
+//        Log.w("Tag", "Damage = -${damage}0, life = $lifeAfter")
         return lifeAfter
     }
 

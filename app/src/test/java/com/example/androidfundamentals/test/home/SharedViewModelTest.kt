@@ -1,16 +1,11 @@
 package com.example.androidfundamentals.test.home
 
-import com.example.androidfundamentals.data.Hero
-import com.example.androidfundamentals.home.HeroActivity.Companion.launch
 import com.example.androidfundamentals.home.SharedViewModel
+import com.example.androidfundamentals.login.LoginViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runTest
 import org.junit.Test
-
 import org.junit.Assert.*
 import org.junit.Rule
-import java.lang.Exception
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -23,19 +18,28 @@ class SharedViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    val viewModel = SharedViewModel()
+    val sharedViewModel = SharedViewModel()
+    val loginViewModel = LoginViewModel()
+
     @Test
     fun `Try 60 + 20`() {
-        val result = viewModel.heal(60)
+        val result = sharedViewModel.heal(60)
         val expectedValue = 80
         assertEquals(expectedValue, result)
     }
 
     @Test
     fun `Try 20 + 20`() {
-        val result = viewModel.heal(20)
+        val result = sharedViewModel.heal(20)
         val expectedValue = 40
         assertEquals(expectedValue, result)
+    }
+
+    @Test
+    fun `Damage between 10 and 60`() {
+        val lifeAfter = sharedViewModel.takeDamage(100)
+        assertTrue(lifeAfter >= 40)
+        assertTrue(lifeAfter <= 90)
     }
 
 //    @Test
