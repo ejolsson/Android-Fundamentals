@@ -75,27 +75,6 @@ class SharedViewModel: ViewModel() {
 
     fun returnToHeroList() {
         Log.w("Tag", "fun returnToHeroList()...")
-
-        // Test 1. Tried switching order too. Result: crash
-//        _heroState.value = HeroState.OnHeroReceived(hero)
-//        _heroListState.value = HeroListState.OnHeroSelected(hero)
-
-        // Test 2. Result: Life goes into negative
-//        _heroListState.value = HeroListState.Idle
-
-        // Test 3. Result: Crash
-//        _heroState.value = HeroState.HeroLifeZero(hero) // Should Log: .HeroLifeZero
-//        _heroListState.value = HeroListState.Idle
-
-        // Test 4. Result: Return to login, neither print statement showing
-//        _heroState.value = HeroState.HeroLifeZero(hero)
-//        _heroListState.value = HeroListState.OnHeroDeath(heroesLiving)
-
-        // Test 5. Result: Return to login, neither print statement showing
-//        _heroState.value = HeroState.HeroLifeZero(hero)
-//        _heroListState.value = HeroListState.OnHeroListReceived(heroesLiving)
-
-        // Method 6
         selectedHero?.let { hero ->
             _heroState.value = HeroState.HeroLifeZero(hero)
             heroesLiving.firstOrNull {it.name == hero.name}?.let {

@@ -26,19 +26,22 @@
     <ImageView
         android:id="@+id/ivHeroFightPic"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
         android:layout_margin="20sp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:contentDescription="@string/herofightimage"
         android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hero_fight_page"
-        app:srcCompat="@mipmap/login_background"
-        tools:layout_editor_absoluteX="144dp" />
+        app:srcCompat="@mipmap/login_background" />
 
     <ImageView
         android:id="@+id/ivDamageAnimation"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
         android:layout_margin="20sp"
         android:alpha="0.0"

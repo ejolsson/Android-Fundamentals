@@ -44,6 +44,7 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.5.7' // L5, 0.37.00 needed for .. by viewModels
     implementation 'com.squareup.picasso:picasso:2.8'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
