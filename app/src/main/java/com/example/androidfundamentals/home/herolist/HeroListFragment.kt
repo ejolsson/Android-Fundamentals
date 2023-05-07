@@ -67,7 +67,7 @@ class HeroListFragment(): Fragment(), HeroClicked {
                         Log.w("Tag HeroListFrag", ".OnHeroSelected")
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.fFragment, FightFragment(it.hero))
-                            .addToBackStack(HeroActivity::javaClass.name) // "back button" goes back to login
+                            .addToBackStack(HeroActivity::javaClass.name)
                             .commit()
                     }
                 }

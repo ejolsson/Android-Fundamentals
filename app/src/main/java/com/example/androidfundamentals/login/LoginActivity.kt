@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.androidfundamentals.R
 import com.example.androidfundamentals.databinding.LoginBinding
 import com.example.androidfundamentals.home.HeroActivity
-import com.example.androidfundamentals.home.SharedViewModel
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
