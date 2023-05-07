@@ -39,11 +39,11 @@ class HeroListFragment(): Fragment(), HeroClicked {
 
     private fun setObservers() { // listen for async events, do some action
         viewLifecycleOwner.lifecycleScope.launch{
-            viewModel.heroListState.collect {
+            viewModel.heroListState.collect { // -> it
                 when(it) {
                     is SharedViewModel.HeroListState.OnHeroListReceived -> {
                         Log.w("Tag", "HeroListFrag > onViewCreated > heroesFight = ${it.heroes}") // empty
-                        adapter = HeroCellAdapter(it.heroes, this@HeroListFragment) // instantiate adapter, send List<Hero>
+                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment) // instantiate adapter, send List<Hero>
                         binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
                         binding.rvListOfHeroes.adapter = adapter
                     }

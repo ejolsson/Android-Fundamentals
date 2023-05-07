@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.example.androidfundamentals.R
 import com.example.androidfundamentals.data.Hero
@@ -19,9 +19,7 @@ import com.example.androidfundamentals.home.HeroActivity
 import com.example.androidfundamentals.home.SharedViewModel
 import com.example.androidfundamentals.home.herolist.HeroListFragment
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.lang.Thread.sleep
 
 class FightFragment(private val hero: Hero) : Fragment() {
 
@@ -62,30 +60,31 @@ class FightFragment(private val hero: Hero) : Fragment() {
         val healButton = getView()?.findViewById<Button>(R.id.heal_button)
 
         Log.w("Tag FightFrag", "Hero info: $hero")
-        Log.w("Tag FightFrag", "${hero.name} life: ${hero.life}")
-        Log.w("Tag FightFrag", "Living heroes: ${listOfHeroesSample.filter { it.life > 0 }}")
+        Log.w("Tag FightFrag", "${hero.name} life: ${hero.currentLife}")
+        Log.w("Tag FightFrag", "Living heroes: ${listOfHeroesSample.filter { it.currentLife > 0 }}")
+//        Log.w("Tag FightFrag", "Living heroes: ${listOfHeroesSample[1].}")
 
         takeDamageButton?.setOnClickListener {
 
             // initial
             Log.w("Tag FightFrag", "FightFrag > takeDamageButton tapped")
             Log.w("Tag FightFrag", "FightFrag > Hero info: $hero")
-            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.life}")
+            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.currentLife}")
 
             // fight
-            hero.life = viewModel.takeDamage(hero.life)
+            hero.currentLife = viewModel.takeDamage(hero.currentLife)
 
-            binding.lifeBarLabel.text = "Life ${hero.life}"
-            binding.lifebar.setProgress(hero.life,true) // show life value in progress bar
-            binding.ivDamageAnimation.alpha = 0.8F
+            binding.lifeBarLabel.text = "Life ${hero.currentLife}"
+            binding.lifebar.setProgress(hero.currentLife,true) // show life value in progress bar
+            binding.ivDamageAnimation.alpha = 0.4F
             binding.ouch.alpha = 1.0F
 //            delay(300)
 //            sleep(1000)
 //            binding.ivDamageAnimation.alpha = 0.0F
 
             // after
-            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.life}")
-            if (hero.life <= 0)  {
+            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.currentLife}")
+            if (hero.currentLife <= 0)  {
                 Log.w("Tag FightFrag", "Life <= 0")
                 viewModel.returnToHeroList()
             }
@@ -96,18 +95,18 @@ class FightFragment(private val hero: Hero) : Fragment() {
             // initial
             Log.w("\nTag FightFrag", "FightFrag > healButton tapped")
             Log.w("Tag FightFrag", "FightFrag > Hero info: $hero")
-            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.life}\n")
+            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.currentLife}\n")
 
             // heal
-            hero.life = viewModel.heal(hero.life)
+            hero.currentLife = viewModel.heal(hero.currentLife)
 
-            binding.lifeBarLabel.text = "Life ${hero.life}"
-            binding.lifebar.setProgress(hero.life,true) // show life value in progress bar
+            binding.lifeBarLabel.text = "Life ${hero.currentLife}"
+            binding.lifebar.setProgress(hero.currentLife,true) // show life value in progress bar
             binding.ivDamageAnimation.alpha = 0.0F
             binding.ouch.alpha = 0.0F
 
             // after
-            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.life}")
+            Log.w("Tag FightFrag", "FightFrag > ${hero.name} life: ${hero.currentLife}")
         }
 
     }
@@ -118,19 +117,41 @@ class FightFragment(private val hero: Hero) : Fragment() {
                 when (it) {
                     is SharedViewModel.HeroState.OnHeroReceived -> {
                         Log.w("Tag FightFrag", "When > is > SharedVM.HeroState.OnHeroReceived")
-                        hero.life = 100
+                        hero.currentLife = 100
                         Log.w("Tag FightFrag", "Hero info: $hero")
-                        Log.w("Tag FightFrag", "${hero.name} life: ${hero.life}")
+                        Log.w("Tag FightFrag", "${hero.name} life: ${hero.currentLife}")
 //                        parentFragmentManager.beginTransaction()
 //                            .replace(R.id.fFragment, HeroListFragment())
 //                            .addToBackStack(HeroListFragment::javaClass.name)
 //                            .commit()
                     }
                     is SharedViewModel.HeroState.HeroLifeZero -> {
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.fFragment, HeroListFragment())
-                            .addToBackStack(HeroActivity::javaClass.name)
-                            .commit()
+
+                        // below returns to login, allows 1 more game, then crashes
+                        parentFragmentManager.commit {
+                            replace(R.id.fFragment, HeroListFragment())
+                            setReorderingAllowed(true)
+                            addToBackStack(HeroActivity::javaClass.name)
+                        }
+
+                        // below crashes
+//                        parentFragmentManager.beginTransaction()
+//                            .add(R.id.fFragment, HeroListFragment())
+//                            .addToBackStack(HeroActivity::javaClass.name)
+//                            .commit()
+
+                        // unresolved error
+//                        supportFragmentManager.beginTransaction()
+//                            .replace(R.id.fFragment, HeroListFragment())
+//                            .addToBackStack(HeroActivity::javaClass.name)
+//                            .commit()
+
+                        // below crashes
+//                        childFragmentManager.beginTransaction()
+//                            .replace(R.id.fFragment, HeroListFragment())
+//                            .addToBackStack(HeroActivity::javaClass.name)
+//                            .commit()
+
                     }
                     is SharedViewModel.HeroState.Idle -> Unit
                 }
