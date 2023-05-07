@@ -53,7 +53,9 @@ class HeroListFragment(): Fragment(), HeroClicked {
                     }
                     is SharedViewModel.HeroListState.OnHeroDeath -> {
                         Log.w("Tag HeroListFrag", ".OnHeroDeath")
-//                        activity?.supportFragmentManager?.popBackStack()
+                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment) // instantiate adapter, send List<Hero>
+                        binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
+                        binding.rvListOfHeroes.adapter = adapter
                         Log.w("Tag HeroListFrag", "HeroListFrag > is ....OnHero Death > heroesLiving = ${viewModel.heroesLiving}")
                     }
                     is SharedViewModel.HeroListState.ErrorJSON ->

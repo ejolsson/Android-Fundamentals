@@ -5,7 +5,6 @@ import com.example.androidfundamentals.data.Hero
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidfundamentals.data.HeroDTO
-import com.example.androidfundamentals.databinding.HeroFightFragmentBinding
 import com.example.androidfundamentals.home.fight.FightFragment
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +23,8 @@ class SharedViewModel: ViewModel() {
     val heroListState: StateFlow<HeroListState> = _heroListState
     private val _heroState = MutableStateFlow<HeroState>(HeroState.Idle)
     val heroState: StateFlow<HeroState> = _heroState
-    private lateinit var binding: HeroFightFragmentBinding
-    private lateinit var hero: Hero
     lateinit var heroesLiving: List<Hero>
+    var selectedHero: Hero? = null
     lateinit var fightFragment: FightFragment
 
     fun fetchHeroes(token: String) {
@@ -72,6 +70,7 @@ class SharedViewModel: ViewModel() {
     fun selectHero(hero: Hero) { // called in HeroListFrag > fun heroSelectionClicked
         _heroListState.value = HeroListState.OnHeroSelected(hero)
         _heroState.value = HeroState.OnHeroReceived(hero)
+        selectedHero = hero
     }
 
     fun returnToHeroList() {
@@ -89,13 +88,26 @@ class SharedViewModel: ViewModel() {
 //        _heroListState.value = HeroListState.Idle
 
         // Test 4. Result: Return to login, neither print statement showing
-        _heroState.value = HeroState.HeroLifeZero(hero)
-        _heroListState.value = HeroListState.OnHeroDeath(heroesLiving)
+//        _heroState.value = HeroState.HeroLifeZero(hero)
+//        _heroListState.value = HeroListState.OnHeroDeath(heroesLiving)
+
+        // Test 5. Result: Return to login, neither print statement showing
+//        _heroState.value = HeroState.HeroLifeZero(hero)
+//        _heroListState.value = HeroListState.OnHeroListReceived(heroesLiving)
+
+        // Method 6
+        selectedHero?.let { hero ->
+            _heroState.value = HeroState.HeroLifeZero(hero)
+            heroesLiving.firstOrNull {it.name == hero.name}?.let {
+                it.currentLife = hero.currentLife
+                _heroListState.value = HeroListState.OnHeroDeath(heroesLiving)
+            }
+        }
     }
 
     private var damageLevels = 6
 
-    private fun generateRandomNumber(levels: Int): Int {
+    fun generateRandomNumber(levels: Int): Int {
         return Random.nextInt(1, levels)
     }
 
@@ -107,17 +119,16 @@ class SharedViewModel: ViewModel() {
         return lifeAfter
     }
 
-    fun heal(lifeBefore: Int):Int {
-        Log.w("Tag", "fun heal...")
-        val lifeAfter = lifeBefore + 20
-        Log.w("Tag", "Healng = +20, Life = $lifeAfter")
-        return lifeAfter
+    fun heal(lifeBefore: Int): Int {
+        return lifeBefore + 20
     }
 
     sealed class HeroListState {
         object Idle: HeroListState()
         data class OnHeroListReceived(val heroes: List<Hero>): HeroListState()
         data class OnHeroDeath(val heroes: List<Hero>): HeroListState()
+//        data class OnHeroDeath(): HeroListState()
+
         data class OnHeroSelected(val hero: Hero): HeroListState()
         data class ErrorJSON(val error: String): HeroListState()
         data class ErrorResponse(val error: String): HeroListState()
