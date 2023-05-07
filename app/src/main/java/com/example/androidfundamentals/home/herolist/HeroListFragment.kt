@@ -42,17 +42,27 @@ class HeroListFragment(): Fragment(), HeroClicked {
             viewModel.heroListState.collect { // -> it
                 when(it) {
                     is SharedViewModel.HeroListState.OnHeroListReceived -> {
-                        Log.w("Tag", "HeroListFrag > onViewCreated > heroesFight = ${it.heroes}") // empty
+                        Log.w("Tag HeroListFrag", ".OnHeroListReceived")
+                        Log.w("Tag HeroListFrag", "HeroListFrag > onViewCreated > heroesFight = ${it.heroes}") // empty
+
+                        it.heroes[0].currentLife = 0 // filter test... works!!
+
                         adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment) // instantiate adapter, send List<Hero>
                         binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
                         binding.rvListOfHeroes.adapter = adapter
                     }
+                    is SharedViewModel.HeroListState.OnHeroDeath -> {
+                        Log.w("Tag HeroListFrag", ".OnHeroDeath")
+//                        activity?.supportFragmentManager?.popBackStack()
+                        Log.w("Tag HeroListFrag", "HeroListFrag > is ....OnHero Death > heroesLiving = ${viewModel.heroesLiving}")
+                    }
                     is SharedViewModel.HeroListState.ErrorJSON ->
-                        Log.w("Tag", "HeroState ErrorJSON")
+                        Log.w("Tag HeroListFrag", "HeroState ErrorJSON")
                     is SharedViewModel.HeroListState.ErrorResponse ->
-                        Log.w("Tag", "HeroState ErrorResponse")
+                        Log.w("Tag HeroListFrag", "HeroState ErrorResponse")
                     is SharedViewModel.HeroListState.Idle -> Unit
                     is SharedViewModel.HeroListState.OnHeroSelected -> {
+                        Log.w("Tag HeroListFrag", ".OnHeroSelected")
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.fFragment, FightFragment(it.hero))
                             .addToBackStack(HeroActivity::javaClass.name) // "back button" goes back to login

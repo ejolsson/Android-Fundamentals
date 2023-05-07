@@ -26,6 +26,7 @@ class SharedViewModel: ViewModel() {
     val heroState: StateFlow<HeroState> = _heroState
     private lateinit var binding: HeroFightFragmentBinding
     private lateinit var hero: Hero
+    lateinit var heroesLiving: List<Hero>
     lateinit var fightFragment: FightFragment
 
     fun fetchHeroes(token: String) {
@@ -54,6 +55,8 @@ class SharedViewModel: ViewModel() {
                         Log.w("Tag", "heroDtoArray.asList = ${heroDtoArray.asList()}")
                         val heroesFight = heroDtoArray.toList().map { Hero(it.name, it.photo) } // map API data to local model for simulation
                         Log.w("Tag", "Shared ViewModel > getHeroes() > heroesFight = $heroesFight")
+                        heroesLiving = heroesFight // initialize living heroes with api data
+                        Log.w("Tag", "Shared ViewModel > getHeroes() > heroesLiving = $heroesLiving")
                         _heroListState.value = HeroListState.OnHeroListReceived(heroesFight)
                     } catch (ex: Exception) {
                         _heroListState.value= HeroListState.ErrorJSON("Something went wrong in the fetchHeroes response")
@@ -72,10 +75,24 @@ class SharedViewModel: ViewModel() {
     }
 
     fun returnToHeroList() {
+        Log.w("Tag", "fun returnToHeroList()...")
+
+        // Test 1. Tried switching order too. Result: crash
+//        _heroState.value = HeroState.OnHeroReceived(hero)
+//        _heroListState.value = HeroListState.OnHeroSelected(hero)
+
+        // Test 2. Result: Life goes into negative
+//        _heroListState.value = HeroListState.Idle
+
+        // Test 3. Result: Crash
+//        _heroState.value = HeroState.HeroLifeZero(hero) // Should Log: .HeroLifeZero
+//        _heroListState.value = HeroListState.Idle
+
+        // Test 4. Result: Return to login, neither print statement showing
         _heroState.value = HeroState.HeroLifeZero(hero)
+        _heroListState.value = HeroListState.OnHeroDeath(heroesLiving)
     }
 
-    private var life:Int = 100
     private var damageLevels = 6
 
     private fun generateRandomNumber(levels: Int): Int {
@@ -100,6 +117,7 @@ class SharedViewModel: ViewModel() {
     sealed class HeroListState {
         object Idle: HeroListState()
         data class OnHeroListReceived(val heroes: List<Hero>): HeroListState()
+        data class OnHeroDeath(val heroes: List<Hero>): HeroListState()
         data class OnHeroSelected(val hero: Hero): HeroListState()
         data class ErrorJSON(val error: String): HeroListState()
         data class ErrorResponse(val error: String): HeroListState()
